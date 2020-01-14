@@ -1,0 +1,10 @@
+project:
+  name: profiling-m2
+  src: src
+  app:
+    $ref: /app/magento2/ce/2.3
+    services:
+      db:
+        logging:
+          stdout: true
+          stderr: true
