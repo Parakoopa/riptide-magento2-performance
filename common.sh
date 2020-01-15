@@ -17,3 +17,7 @@ prf() {
   eval "${VAR}"="'$(cat $DIR/.rptprfout)'"
   rm $DIR/.rptprfout
 }
+
+access_page() {
+  echo docker run -v $(pwd)/phantom_render.js:/script.js -e URL=$1 --rm wernight/phantomjs phantomjs --ignore-ssl-errors=true /script.js
+}

@@ -50,9 +50,9 @@ echo "------- INPUT REQUIRED -------"
 echo "Will run the first curl command. Make sure the shop is accesible at https://$HOSTNAME_OF_SHOP/."
 echo "Press any key to continue."
 read
-prf ACCESS_NO_CACHE curl "--silent" "-k" "https://$HOSTNAME_OF_SHOP/"
+prf ACCESS_NO_CACHE $(access_page "https://$HOSTNAME_OF_SHOP/")
 
-prf ACCESS_CACHE curl "--silent" "-k" "https://$HOSTNAME_OF_SHOP/"
+prf ACCESS_CACHE $(access_page "https://$HOSTNAME_OF_SHOP/")
 
 prf STATUS_CACHE bin/magento module:status
 
@@ -62,7 +62,11 @@ prf DI_COMPILE bin/magento setup:di:compile
 
 prf STATIC_CONTENT_DEPLOY bin/magento "setup:static-content:deploy" "-f"
 
-prf ACCESS_DI_STATIC curl "--silent" "-k" "https://$HOSTNAME_OF_SHOP/"
+prf ACCESS_DI_STATIC $(access_page "https://$HOSTNAME_OF_SHOP/")
+
+prf CACHE_FLUSH bin/magento cache:flush
+
+prf ACCESS_NO_CACHE_BACKEND $(access_page "https://$HOSTNAME_OF_SHOP/admin/")
 
 echo "                     "
 echo "---------------------"
@@ -83,4 +87,6 @@ printf "%-25s ${SETUP_UPGRADE_SECOND}\n" SETUP_UPGRADE_SECOND
 printf "%-25s ${DI_COMPILE}\n" DI_COMPILE
 printf "%-25s ${STATIC_CONTENT_DEPLOY}\n" STATIC_CONTENT_DEPLOY
 printf "%-25s ${ACCESS_DI_STATIC}\n" ACCESS_DI_STATIC
+printf "%-25s ${CACHE_FLUSH}\n" CACHE_FLUSH
+printf "%-25s ${ACCESS_NO_CACHE_BACKEND}\n" ACCESS_NO_CACHE_BACKEND
 printf "%-25s n/a\n" START_END

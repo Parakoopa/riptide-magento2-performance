@@ -9,7 +9,7 @@ Run the script ``run.sh riptide-proxy-url`` on MacOS/Linux to get the performanc
 ``riptide-proxy-url`` is the base URL of the Riptide proxy.
 
 Run ``run_no_riptide.sh hostname-of-shop database-host database-name database-port database-user database-password redis-host varnish-host`` to install and run the tests against a local PHP & Nginx/Apache
-setup without Riptide or containers. The database that will be tested against must exist and be empty.
+setup without Riptide. The database that will be tested against must exist and be empty.
 Configure your local web-server to serve Magento from the ``src`` directory in this project. This "no Riptide" script will pause and wait for input, before trying to access the shop via HTTP for the first time, so you can make sure your setup is correct. This does not use Varnish.
 
 The scripts have to be run from this directory.
@@ -22,6 +22,9 @@ Additionally GNU ``time`` needs to be installed.
 Under MacOS install it via ``brew install gnu-time``. 
 Under Arch run ``pacman -Sy time``.
 The builtin Bash/Zsh ``time`` commands will NOT work. 
+
+Docker is required for both scripts. Also the URL of the Riptide Proxy and/or the local web-server must be resolvable
+with DNS (Hosts entries are not enough).
 
 Tasks
 -----
@@ -41,6 +44,8 @@ The script runs and profiles tasks in this order:
 - DI_COMPILE - Run setup:di:compile
 - STATIC_CONTENT_DEPLOY - Run setup:static-content:deploy
 - ACCESS_DI_STATIC - Access the shop again with di and static-content deployed
+- CACHE_FLUSH - Run cache:flush
+- ACCESS_NO_CACHE_BACKEND - Access the shop backend with no cache
 - START_END - Restart the whole application again
 - (Stop the application)
 

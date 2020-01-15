@@ -51,9 +51,9 @@ prf STATUS_NO_CACHE riptide cmd magento module:status
 
 prf SETUP_UPGRADE_FIRST riptide cmd magento setup:upgrade
 
-prf ACCESS_NO_CACHE curl "--silent" "-k" "https://profiling-m2.$RIPTIDE_BASE_URL/"
+prf ACCESS_NO_CACHE $(access_page "https://profiling-m2.$RIPTIDE_BASE_URL/")
 
-prf ACCESS_CACHE curl "--silent" "-k" "https://profiling-m2.$RIPTIDE_BASE_URL/"
+prf ACCESS_CACHE $(access_page "https://profiling-m2.$RIPTIDE_BASE_URL/")
 
 prf STATUS_CACHE riptide cmd magento module:status
 
@@ -63,7 +63,11 @@ prf DI_COMPILE riptide cmd magento setup:di:compile
 
 prf STATIC_CONTENT_DEPLOY riptide cmd magento "setup:static-content:deploy" "-f"
 
-prf ACCESS_DI_STATIC curl "--silent" "-k" "https://profiling-m2.{$RIPTIDE_BASE_URL}/"
+prf ACCESS_DI_STATIC $(access_page "https://profiling-m2.{$RIPTIDE_BASE_URL}/")
+
+prf CACHE_FLUSH riptide cmd magento cache:flush
+
+prf ACCESS_NO_CACHE_BACKEND $(access_page "https://profiling-m2.{$RIPTIDE_BASE_URL}/admin")
 
 prf START_END riptide restart
 
@@ -88,4 +92,6 @@ printf "%-25s ${SETUP_UPGRADE_SECOND}\n" SETUP_UPGRADE_SECOND
 printf "%-25s ${DI_COMPILE}\n" DI_COMPILE
 printf "%-25s ${STATIC_CONTENT_DEPLOY}\n" STATIC_CONTENT_DEPLOY
 printf "%-25s ${ACCESS_DI_STATIC}\n" ACCESS_DI_STATIC
+printf "%-25s ${CACHE_FLUSH}\n" CACHE_FLUSH
+printf "%-25s ${ACCESS_NO_CACHE_BACKEND}\n" ACCESS_NO_CACHE_BACKEND
 printf "%-25s ${START_END}\n" START_END
