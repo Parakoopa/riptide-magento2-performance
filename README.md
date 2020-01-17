@@ -5,12 +5,14 @@ This repository meassures the time that common tasks during the Magento 2 workfl
 
 Script
 ------
-Run the script ``run.sh riptide-proxy-url`` on MacOS/Linux to get the performance results. The script will output timings for the tasks at the very end.
+Run the script ``run.sh riptide-proxy-url docker-host-ip`` on MacOS/Linux to get the performance results. The script will output timings for the tasks at the very end.
 ``riptide-proxy-url`` is the base URL of the Riptide proxy.
 
-Run ``run_no_riptide.sh hostname-of-shop database-host database-name database-port database-user database-password redis-host varnish-host`` to install and run the tests against a local PHP & Nginx/Apache
+Run ``run_no_riptide.sh hostname-of-shop database-host database-name database-user database-password redis-host docker-host-ip`` to install and run the tests against a local PHP & Nginx/Apache
 setup without Riptide. The database that will be tested against must exist and be empty.
-Configure your local web-server to serve Magento from the ``src`` directory in this project. This "no Riptide" script will pause and wait for input, before trying to access the shop via HTTP for the first time, so you can make sure your setup is correct. This does not use Varnish.
+Configure your local web-server to serve Magento from the ``src`` directory in this project. This "no Riptide" script will pause and wait for input, before trying to access the shop via HTTP for the first time, so you can make sure your setup is correct.
+
+``docker-host-ip`` is 172.17.0.1 for Linux and has to be ``host.docker.internal`` for Mac/Windows.
 
 The scripts have to be run from this directory.
 

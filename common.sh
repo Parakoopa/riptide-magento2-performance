@@ -19,5 +19,11 @@ prf() {
 }
 
 access_page() {
-  echo docker run -v $(pwd)/phantom_render.js:/script.js -e URL=$1 --rm wernight/phantomjs phantomjs --ignore-ssl-errors=true /script.js
+  if [ -z "$2" ];
+  then
+    echo docker run                           -v $DIR/phantom_render.js:/script.js -e URL=$1 --rm wernight/phantomjs phantomjs --ignore-ssl-errors=true /script.js
+  else
+    NOPORT=$(echo $3 | cut -d: -f1)
+    echo docker run --add-host "$NOPORT:$2" -v $DIR/phantom_render.js:/script.js -e URL=$1 --rm wernight/phantomjs phantomjs --ignore-ssl-errors=true /script.js
+  fi
 }
