@@ -4,7 +4,16 @@ project:
   app:
     $ref: /app/magento2/ce/2.3
     services:
-      db:
-        logging:
-          stdout: true
-          stderr: true
+      varnish: $remove
+      rabbitmq: $remove
+      www:
+        roles:
+          - main
+          - magento_front
+        config:
+          env_php:
+            from: env.php
+      php:
+        config:
+          env_php:
+            from: env.php
